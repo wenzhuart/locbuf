@@ -2,5 +2,5 @@
 # Created by Bamboo - 11 Feb 2020 (Tue)
 
 
-from .locbuf import Buffer
+from .locbuf import Locbuf
 

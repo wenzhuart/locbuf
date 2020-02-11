@@ -12,7 +12,7 @@ import logging
 logger = logging.getLogger('localizer')
 
 
-class Buffer(object):
+class Locbuf(object):
     def __init__(self, tmp_folder='loc_tmp', overtime_days=3):
         self.overtime_days = overtime_days
         self.tmp_path = self._ensure_folder(tmp_folder)
