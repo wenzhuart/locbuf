@@ -9,7 +9,7 @@ import pandas as pd
 from functools import wraps
 from datetime import datetime, timedelta, date
 import logging
-logger = logging.getLogger('localizer')
+logger = logging.getLogger('locbuf')
 
 
 class Locbuf(object):
