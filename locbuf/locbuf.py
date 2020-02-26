@@ -105,7 +105,7 @@ class Locbuf(object):
                 stockfile = list((self.tmp_path / funcname).glob(filename))
                 # --- no tmp file yet, request and save ---
                 if not stockfile:
-                    logger.info('new file {}.csv'.format(filename))
+                    logger.info('new file {} -> {}'.format(funcname, filename))
                     reqdf = func(instance, *args, **kwargs)
                     drydf = self._normalize_df(reqdf, dfdt_arg)
                     self._save_csv(drydf, self.tmp_path / funcname / filename)
@@ -131,7 +131,7 @@ class Locbuf(object):
                 arg_end = self._normalize_date_format(arg_end)
                 exdf = csv_df
                 if self._get_dtobj_date(arg_start) + timedelta(days=1) < csv_early_dt:
-                    logger.info('out of csv early')
+                    logger.info('{}/{}out of csv early'.format(funcname, filename))
                     reseted_end = self._get_str_date(csv_early_dt - timedelta(days=1))
                     rstkw_end = kwargs.copy()
                     rstkw_end.update({strt_arg: arg_start, end_arg: reseted_end})
@@ -140,7 +140,7 @@ class Locbuf(object):
                     erldf = self._normalize_df(df, dfdt_arg)
                     exdf = pd.concat([erldf, exdf])
                 if self._get_dtobj_date(arg_end) - timedelta(days=1) > csv_last_dt:
-                    logger.info('out of csv last')
+                    logger.info('{}/{}out of csv last'.format(funcname, filename))
                     reseted_start = self._get_str_date(csv_last_dt + timedelta(days=1))
                     rstkw_strt = kwargs.copy()
                     rstkw_strt.update({strt_arg: reseted_start, end_arg: arg_end})
