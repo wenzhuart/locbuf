@@ -82,8 +82,7 @@ class Locbuf(object):
         if df.empty:
             return None
         if df.index.name == date_colname:
-            # --- already normalized ---
-            return df
+            df[date_colname] = df.index
         # --- ensure date-order of df ---
         df[date_colname] = df[date_colname].apply(self._normalize_date_format)
         df_start_dt = datetime.strptime(df.iloc[0][date_colname], self.date_format)
