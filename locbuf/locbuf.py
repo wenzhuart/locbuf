@@ -94,7 +94,9 @@ class Locbuf(object):
         df = df.set_index(date_colname)
         return df
 
-    # --- decorate method ---
+    # decorate method
+    # ------------------------------------------------------------------
+    #
     def csv_buffer(self, tag=None, dfdt_arg=None, strt_arg=None, end_arg=None):
         def decorate(func, *args):
             @wraps(func)            
@@ -150,7 +152,10 @@ class Locbuf(object):
                 if not exdf.equals(csv_df):
                     logger.info('saving new csv {}'.format(filename))
                     self._save_csv(exdf, self.tmp_path / funcname / filename)
-                return exdf.loc[arg_start:arg_end]
+                try:
+                    return exdf.loc[arg_start:arg_end]
+                except Exception as err:
+                    logger.error('BUG - df prepared but index cannot cover\n{}'.format(err))
             return wrapper
         return decorate
 
