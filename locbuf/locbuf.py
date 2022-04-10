@@ -81,6 +81,10 @@ class Locbuf(object):
             return None
         if df.empty:
             return None
+        # --- if df without date column name specified---
+        if not date_colname:
+            return df
+        # --- if df has date column name ---
         if df.index.name == date_colname:
             df[date_colname] = df.index
         # --- ensure date-order of df ---
