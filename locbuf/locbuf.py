@@ -103,7 +103,7 @@ class Locbuf(object):
     #
     def csv_buffer(self, tag=None, dfdt_arg=None, strt_arg=None, end_arg=None):
         def decorate(func, *args):
-            @wraps(func)            
+            @wraps(func)
             def wrapper(instance, *args, **kwargs):
                 funcname = func.__qualname__
                 filename = '{}.csv'.format(kwargs.get(tag) or funcname)
@@ -116,7 +116,7 @@ class Locbuf(object):
                     self._save_csv(drydf, self.tmp_path / funcname / filename)
                     return drydf
                 stockfile = stockfile.pop()
-                csv_df = self._normalize_df(pd.read_csv(stockfile), dfdt_arg)
+                csv_df = self._normalize_df(pd.read_csv(stockfile, index_col=0), dfdt_arg)
                 # --- func has no date-arg, use ctime ---
                 if not strt_arg or not end_arg:
                     logger.info('func has no date-args, use mtime method')
