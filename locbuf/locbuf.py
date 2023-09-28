@@ -28,6 +28,8 @@ class Locbuf(object):
     def _save_csv(self, df, path):
         if not isinstance(df, pd.DataFrame):
             return
+        if df.empty:
+            return
         self._ensure_folder(path.parent)
         df.to_csv(path)
 
@@ -116,7 +118,13 @@ class Locbuf(object):
                     self._save_csv(drydf, self.tmp_path / funcname / filename)
                     return drydf
                 stockfile = stockfile.pop()
-                csv_df = self._normalize_df(pd.read_csv(stockfile, index_col=0), dfdt_arg)
+                try:
+                    sdf = pd.read_csv(stockfile, index_col=0)
+                except pd.errors.EmptyDataError as err:
+                    logger.warning('{}'.format(err))
+                    logger.warning('{}'.format(filename))
+                    return
+                csv_df = self._normalize_df(sdf, dfdt_arg)
                 # --- func has no date-arg, use ctime ---
                 if not strt_arg or not end_arg:
                     logger.info('func has no date-args, use mtime method')

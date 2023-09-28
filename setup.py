@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='locbuf',
-    version='0.0.7',
+    version='0.0.11',
     author='bamboo',
     author_email='wenzhu_art@hotmail.com',
     url='https://github.com/wenzhuart/locbuf',
